@@ -1,11 +1,11 @@
-import { Box, Button, Card, CardContent, Fab, Grid, IconButton, Stack, TextField, Typography } from '@mui/material';
+import { Fab, Grid } from '@mui/material';
 import Head from 'next/head';
 import { useState, useEffect, useRef } from 'react';
 import shortid from 'shortid';
 import styles from '../styles/Home.module.css';
-import ArrowCircleUpTwoToneIcon from '@mui/icons-material/ArrowCircleUpTwoTone';
 import AddCommentTwoToneIcon from '@mui/icons-material/AddCommentTwoTone';
 import SubmitQuestion from '../components/submit-question';
+import Question from '../components/question';
 
 export default function Home() {
     const submitQuestionRef = useRef(null);
@@ -23,10 +23,12 @@ export default function Home() {
         window.addEventListener('resize', () => {
             clearTimeout(resizeTimer);
             resizeTimer = setTimeout(function () {
-                const particleBody = document.getElementById('particle-body');
-                particleBody.removeChild(particleBody.firstChild);
-                particlesJS.load('particle-body', '/particlesjs-config.json', () => {});
-            }, 500);
+                try {
+                    const particleBody = document.getElementById('particle-body');
+                    particleBody.removeChild(particleBody.firstChild);
+                    particlesJS.load('particle-body', '/particlesjs-config.json', () => {});
+                } catch (err) {}
+            }, 1000);
         });
     }, []);
 
@@ -61,32 +63,7 @@ export default function Home() {
                 <Grid container spacing={2} alignItems="stretch" sx={{ paddingY: 4, zIndex: 40 }}>
                     {data.map((q, index) => {
                         return (
-                            <Grid item key={q._id} xs={12} sm={12} md={4} lg={3} sx={{ zIndex: 40 }}>
-                                <Card
-                                    variant="elevation"
-                                    elevation={6}
-                                    sx={{ width: '100%', height: '100%', opacity: 0.8 }}
-                                >
-                                    <CardContent>
-                                        <Grid container spacing={2}>
-                                            <Grid item xs={3}>
-                                                <Stack direction="column" alignItems="center">
-                                                    <IconButton>
-                                                        <ArrowCircleUpTwoToneIcon fontSize="large" />
-                                                    </IconButton>
-                                                    <Typography variant="body1">{q.votes} Votes</Typography>
-                                                </Stack>
-                                            </Grid>
-                                            <Grid item xs={9}>
-                                                <Stack direction="column" spacing={2}>
-                                                    <Typography variant="h6">{q.name}</Typography>
-                                                    <Typography variant="body1">{q.question}</Typography>
-                                                </Stack>
-                                            </Grid>
-                                        </Grid>
-                                    </CardContent>
-                                </Card>
-                            </Grid>
+                            <Question key={q._id} question={q} setData={setData} />
                         );
                     })}
                 </Grid>
