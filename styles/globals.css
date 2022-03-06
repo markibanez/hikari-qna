@@ -8,6 +8,10 @@ body {
 
 body {
     background: radial-gradient(circle, #24246e, #06051f);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    height: 110vh;
 }
 
 .particles-js-canvas-el {

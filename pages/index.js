@@ -1,10 +1,11 @@
 import { Box, Button, Card, CardContent, Fab, Grid, IconButton, Stack, TextField, Typography } from '@mui/material';
 import Head from 'next/head';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import shortid from 'shortid';
 import styles from '../styles/Home.module.css';
 import ArrowCircleUpTwoToneIcon from '@mui/icons-material/ArrowCircleUpTwoTone';
 import AddCommentTwoToneIcon from '@mui/icons-material/AddCommentTwoTone';
+import SubmitQuestion from '../components/submit-question';
 
 const data = [
     {
@@ -31,8 +32,7 @@ const data = [
 ];
 
 export default function Home() {
-    const [name, setName] = useState('');
-    const [question, setQuestion] = useState('');
+    const submitQuestionRef = useRef(null);
 
     useEffect(() => {
         const uid = localStorage.getItem('uid');
@@ -43,11 +43,7 @@ export default function Home() {
         particlesJS.load('particle-body', '/particlesjs-config.json', () => {
             console.log('particles loaded');
         });
-    })
-
-    const submitQuestion = async () => {
-        alert(`Hello ${name}, you asked the following question: "${question}"`);
-    };
+    });
 
     return (
         <div className={styles.container}>
@@ -58,42 +54,6 @@ export default function Home() {
             </Head>
 
             <main>
-                {/* <Box
-                    sx={{
-                        width: '100%',
-                        backgroundColor: 'transparent',
-                        position: 'fixed',
-                        top: 0,
-                        left: 0,
-                        right: 0,
-                        zIndex: 10,
-                        padding: '10px',
-                    }}
-                >
-                    <Card variant="outlined">
-                        <CardContent>
-                            <Stack direction="column" spacing={2}>
-                                <TextField
-                                    label="Name"
-                                    variant="outlined"
-                                    value={name}
-                                    onChange={(e) => setName(e.target.value)}
-                                />
-                                <TextField
-                                    label="Question"
-                                    variant="outlined"
-                                    value={question}
-                                    onChange={(e) => setQuestion(e.target.value)}
-                                    multiline
-                                    rows={3}
-                                />
-                                <Button variant="contained" onClick={submitQuestion}>
-                                    Submit Question
-                                </Button>
-                            </Stack>
-                        </CardContent>
-                    </Card>
-                </Box> */}
                 <Grid container spacing={2} alignItems="stretch" sx={{ paddingY: 4, zIndex: 40 }}>
                     {data.map((q, index) => {
                         return (
@@ -126,7 +86,13 @@ export default function Home() {
                         );
                     })}
                 </Grid>
-                <Fab variant="extended" color="primary" sx={{ position: 'fixed', bottom: 40, right: 40, zIndex: 50 }}>
+                <SubmitQuestion ref={submitQuestionRef} />
+                <Fab
+                    variant="extended"
+                    color="primary"
+                    onClick={() => submitQuestionRef.current.showModal()}
+                    sx={{ position: 'fixed', bottom: 40, right: 40, zIndex: 50 }}
+                >
                     <AddCommentTwoToneIcon sx={{ marginRight: 1 }} /> Submit Question
                 </Fab>
             </main>
