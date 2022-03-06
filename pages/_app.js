@@ -4,8 +4,15 @@ import { SnackbarProvider } from 'notistack';
 import '../styles/globals.css';
 
 const theme = createTheme({
+    typography: {
+        fontFamily: `"Cinzel Decorative"`,
+        fontSize: 14,
+        fontWeightLight: 200,
+        fontWeightRegular: 400,
+        fontWeightMedium: 700,
+    },
     shape: {
-        borderRadius: 15
+        borderRadius: 15,
     },
     palette: {
         // background: {
@@ -24,8 +31,7 @@ const theme = createTheme({
         // action: {
         //     active: '#FFF'
         // },
-
-    }
+    },
 });
 
 function MyApp({ Component, pageProps }) {
