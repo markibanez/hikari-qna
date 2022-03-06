@@ -11,7 +11,7 @@ export default function Question(props) {
 
     const vote = async (id) => {
         if (localStorage.getItem(id)) {
-            enqueueSnackbar('Already voted for this questions', { variant: 'warning' });
+            enqueueSnackbar('Already voted for this question', { variant: 'warning' });
             return;
         }
 
