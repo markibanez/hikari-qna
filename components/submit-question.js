@@ -1,7 +1,5 @@
 import { Button, Card, Dialog, DialogActions, DialogContent, DialogTitle, Stack, TextField } from '@mui/material';
 import LoadingButton from '@mui/lab/LoadingButton';
-
-
 import { forwardRef, useImperativeHandle, useState } from 'react';
 import { useSnackbar } from 'notistack';
 
@@ -12,6 +10,8 @@ const SubmitQuestion = (props, ref) => {
     const [question, setQuestion] = useState('');
 
     const { enqueueSnackbar } = useSnackbar();
+
+    const { getQuestions } = props;
 
     useImperativeHandle(ref, () => ({
         showModal() {
@@ -40,6 +40,7 @@ const SubmitQuestion = (props, ref) => {
             const response = await fetch(url);
 
             if (response.status === 200) {
+                getQuestions();
                 enqueueSnackbar('Question submitted', { variant: 'success' });
                 setQuestion('');
                 setOpen(false);

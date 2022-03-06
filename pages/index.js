@@ -7,32 +7,9 @@ import ArrowCircleUpTwoToneIcon from '@mui/icons-material/ArrowCircleUpTwoTone';
 import AddCommentTwoToneIcon from '@mui/icons-material/AddCommentTwoTone';
 import SubmitQuestion from '../components/submit-question';
 
-const data = [
-    {
-        name: 'Meghan',
-        question: 'How did we perform in Q3?',
-        votes: 39,
-    },
-    {
-        name: 'John',
-        question: 'What projects do we have planned for the next year?',
-        votes: 38,
-    },
-    {
-        name: 'Anthony',
-        question: 'What are our plans for remote work?',
-        votes: 21,
-    },
-    {
-        name: 'Caesar',
-        question:
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec bibendum tristique dictum. Aenean consectetur eu nisi nec convallis. Vivamus auctor dui iaculis eros fringilla, eu finibus felis ultricies.',
-        votes: 21,
-    },
-];
-
 export default function Home() {
     const submitQuestionRef = useRef(null);
+    const [data, setData] = useState([]);
 
     useEffect(() => {
         const uid = localStorage.getItem('uid');
@@ -44,6 +21,22 @@ export default function Home() {
             console.log('particles loaded');
         });
     });
+
+    const getQuestions = async () => {
+        try {
+            const response = await fetch('/api/get-questions');
+            const result = await response.json();
+            setData(result);
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    useEffect(() => {
+        getQuestions();
+
+        setTimeout(() => getQuestions(), 10000);
+    }, []);
 
     return (
         <div className={styles.container}>
@@ -86,7 +79,7 @@ export default function Home() {
                         );
                     })}
                 </Grid>
-                <SubmitQuestion ref={submitQuestionRef} />
+                <SubmitQuestion ref={submitQuestionRef} getQuestions={getQuestions} />
                 <Fab
                     variant="extended"
                     color="primary"
