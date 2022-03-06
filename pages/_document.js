@@ -9,7 +9,8 @@ export default function Document() {
                 <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&display=swap" rel="stylesheet" />
                 <script src="/particles.min.js"></script>
             </Head>
-            <body id="particle-body">
+            <body>
+                <div id="particle-body"></div>
                 <Main />
                 <NextScript />
             </body>

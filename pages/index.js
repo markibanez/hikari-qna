@@ -16,11 +16,19 @@ export default function Home() {
         if (!uid) localStorage.setItem('uid', shortid.generate());
     }, []);
 
+    let resizeTimer;
     useEffect(() => {
-        particlesJS.load('particle-body', '/particlesjs-config.json', () => {
-            console.log('particles loaded');
+        particlesJS.load('particle-body', '/particlesjs-config.json', () => {});
+
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(function () {
+                const particleBody = document.getElementById('particle-body');
+                particleBody.removeChild(particleBody.firstChild);
+                particlesJS.load('particle-body', '/particlesjs-config.json', () => {});
+            }, 500);
         });
-    });
+    }, []);
 
     const getQuestions = async () => {
         try {
@@ -30,12 +38,15 @@ export default function Home() {
         } catch (err) {
             console.log(err);
         }
-    }
+    };
 
     useEffect(() => {
         getQuestions();
 
-        setTimeout(() => getQuestions(), 10000);
+        setTimeout(() => {
+            console.log('get questions');
+            getQuestions();
+        }, 10000);
     }, []);
 
     return (
@@ -50,7 +61,7 @@ export default function Home() {
                 <Grid container spacing={2} alignItems="stretch" sx={{ paddingY: 4, zIndex: 40 }}>
                     {data.map((q, index) => {
                         return (
-                            <Grid item key={index} xs={12} sm={12} md={4} lg={3} sx={{ zIndex: 40 }}>
+                            <Grid item key={q._id} xs={12} sm={12} md={4} lg={3} sx={{ zIndex: 40 }}>
                                 <Card
                                     variant="elevation"
                                     elevation={6}
@@ -83,6 +94,7 @@ export default function Home() {
                 <Fab
                     variant="extended"
                     color="primary"
+                    size="large"
                     onClick={() => submitQuestionRef.current.showModal()}
                     sx={{ position: 'fixed', bottom: 40, right: 40, zIndex: 50 }}
                 >

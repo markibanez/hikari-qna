@@ -76,7 +76,7 @@ const SubmitQuestion = (props, ref) => {
                     </Stack>
                 </DialogContent>
                 <DialogActions>
-                    <Button color="primary" variant="outlined" onClick={submitQuestion}>
+                    <Button color="primary" variant="outlined" onClick={handleClose}>
                         Cancel
                     </Button>
                     <LoadingButton color="primary" variant="contained" loading={saving} onClick={submitQuestion}>
