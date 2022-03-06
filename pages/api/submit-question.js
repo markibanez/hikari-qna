@@ -17,7 +17,8 @@ const handler = async (req, res) => {
     }
 
     const db = await getDB();
-    await db.collection('questions').insertOne({ uid, name, question });
+    const votes = 0;
+    await db.collection('questions').insertOne({ uid, name, question, votes });
     res.status(200).json('question-saved');
 }
 

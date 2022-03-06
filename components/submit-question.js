@@ -1,10 +1,17 @@
-import { Box, Button, Card, Dialog, DialogActions, DialogContent, DialogTitle, Stack, TextField } from '@mui/material';
+import { Button, Card, Dialog, DialogActions, DialogContent, DialogTitle, Stack, TextField } from '@mui/material';
+import LoadingButton from '@mui/lab/LoadingButton';
+
+
 import { forwardRef, useImperativeHandle, useState } from 'react';
+import { useSnackbar } from 'notistack';
 
 const SubmitQuestion = (props, ref) => {
     const [open, setOpen] = useState(false);
+    const [saving, setSaving] = useState(false);
     const [name, setName] = useState('');
     const [question, setQuestion] = useState('');
+
+    const { enqueueSnackbar } = useSnackbar();
 
     useImperativeHandle(ref, () => ({
         showModal() {
@@ -17,7 +24,33 @@ const SubmitQuestion = (props, ref) => {
     };
 
     const submitQuestion = async () => {
-        alert(`Hello ${name}, you asked the following question: "${question}"`);
+        if (!name) {
+            enqueueSnackbar('Please enter your name', { variant: 'error' });
+            return;
+        }
+
+        if (!question) {
+            enqueueSnackbar('Please enter your question', { variant: 'error' });
+            return;
+        }
+
+        setSaving(true);
+        try {
+            const url = `/api/submit-question?uid=${localStorage.getItem('uid')}&name=${name}&question=${question}`;
+            const response = await fetch(url);
+
+            if (response.status === 200) {
+                enqueueSnackbar('Question submitted', { variant: 'success' });
+                setQuestion('');
+                setOpen(false);
+            } else {
+                enqueueSnackbar('Your question could not be submitted', { variant: 'error' });
+            }
+        } catch (err) {
+            enqueueSnackbar('Your question could not be submitted', { variant: 'error' });
+        } finally {
+            setSaving(false);
+        }
     };
 
     return (
@@ -37,14 +70,17 @@ const SubmitQuestion = (props, ref) => {
                             value={question}
                             onChange={(e) => setQuestion(e.target.value)}
                             multiline
-                            rows={3}
+                            rows={10}
                         />
                     </Stack>
                 </DialogContent>
                 <DialogActions>
-                    <Button color="primary" variant="contained" onClick={handleClose}>
-                        Submit
+                    <Button color="primary" variant="outlined" onClick={submitQuestion}>
+                        Cancel
                     </Button>
+                    <LoadingButton color="primary" variant="contained" loading={saving} onClick={submitQuestion}>
+                        Submit
+                    </LoadingButton>
                 </DialogActions>
             </Dialog>
         </>

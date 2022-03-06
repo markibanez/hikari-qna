@@ -1,4 +1,6 @@
 import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { SnackbarProvider } from 'notistack';
+
 import '../styles/globals.css';
 
 const theme = createTheme({
@@ -29,7 +31,9 @@ const theme = createTheme({
 function MyApp({ Component, pageProps }) {
     return (
         <ThemeProvider theme={theme}>
-            <Component {...pageProps} />
+            <SnackbarProvider preventDuplicate>
+                <Component {...pageProps} />
+            </SnackbarProvider>
         </ThemeProvider>
     );
 }
