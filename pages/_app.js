@@ -6,22 +6,22 @@ const theme = createTheme({
         borderRadius: 15
     },
     palette: {
-        background: {
-            default: '#63666A',
-            paper: '#63666A',
-        },
-        text: {
-            primary: '#E6EEF7'
-        },
-        primary: {
-            main: '#E6EEF7'
-        },
-        secondary: {
-            main: '#FFF'
-        },
-        action: {
-            active: '#FFF'
-        },
+        // background: {
+        //     default: '#FFF',
+        //     paper: '#FFF',
+        // },
+        // text: {
+        //     primary: '#000'
+        // },
+        // primary: {
+        //     main: '#E6EEF7'
+        // },
+        // secondary: {
+        //     main: '#FFF'
+        // },
+        // action: {
+        //     active: '#FFF'
+        // },
 
     }
 });

@@ -39,6 +39,12 @@ export default function Home() {
         if (!uid) localStorage.setItem('uid', shortid.generate());
     }, []);
 
+    useEffect(() => {
+        particlesJS.load('particle-body', '/particlesjs-config.json', () => {
+            console.log('particles loaded');
+        });
+    })
+
     const submitQuestion = async () => {
         alert(`Hello ${name}, you asked the following question: "${question}"`);
     };
@@ -88,11 +94,15 @@ export default function Home() {
                         </CardContent>
                     </Card>
                 </Box> */}
-                <Grid container spacing={2} alignItems="stretch" sx={{ paddingY: 4 }}>
+                <Grid container spacing={2} alignItems="stretch" sx={{ paddingY: 4, zIndex: 40 }}>
                     {data.map((q, index) => {
                         return (
-                            <Grid item xs={12} sm={12} md={4} lg={3}>
-                                <Card variant="outlined" key={index} sx={{ width: '100%', height: '100%' }}>
+                            <Grid item key={index} xs={12} sm={12} md={4} lg={3} sx={{ zIndex: 40 }}>
+                                <Card
+                                    variant="elevation"
+                                    elevation={6}
+                                    sx={{ width: '100%', height: '100%', opacity: 0.8 }}
+                                >
                                     <CardContent>
                                         <Grid container spacing={2}>
                                             <Grid item xs={3}>
@@ -116,7 +126,7 @@ export default function Home() {
                         );
                     })}
                 </Grid>
-                <Fab variant="extended" color="primary" sx={{ position: 'fixed', bottom: 40, right: 40 }}>
+                <Fab variant="extended" color="primary" sx={{ position: 'fixed', bottom: 40, right: 40, zIndex: 50 }}>
                     <AddCommentTwoToneIcon sx={{ marginRight: 1 }} /> Submit Question
                 </Fab>
             </main>

@@ -7,11 +7,15 @@ body {
 }
 
 body {
-    background-image: url('/bg.jpg');
-    background-repeat: no-repeat;
-    background-position: center;
-    background-attachment: fixed;
-    background-size: cover;
+    background: radial-gradient(circle, #24246e, #06051f);
+}
+
+.particles-js-canvas-el {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
 }
 
 a {
