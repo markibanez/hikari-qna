@@ -7,10 +7,10 @@ body {
 }
 
 body {
-    background: radial-gradient(circle, #24246e, #06051f);
+    background: url('/hikari-transparent.png'), radial-gradient(circle, #24246e, #06051f);
     background-repeat: no-repeat;
     background-position: center;
-    background-size: cover;
+    background-size: contain;
 }
 
 .particles-js-canvas-el {

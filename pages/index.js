@@ -60,11 +60,10 @@ export default function Home() {
             </Head>
 
             <main>
+                {/* <img src="/hikari-logo.jpg" style={{ position: 'fixed', bottom: 20, left: 20, height: 200, opacity: 0.5 }} /> */}
                 <Grid container spacing={2} alignItems="stretch" sx={{ paddingY: 4, zIndex: 40 }}>
                     {data.map((q, index) => {
-                        return (
-                            <Question key={q._id} question={q} setData={setData} />
-                        );
+                        return <Question key={q._id} question={q} setData={setData} />;
                     })}
                 </Grid>
                 <SubmitQuestion ref={submitQuestionRef} getQuestions={getQuestions} />
