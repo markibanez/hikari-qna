@@ -16,21 +16,21 @@ export default function Home() {
         if (!uid) localStorage.setItem('uid', shortid.generate());
     }, []);
 
-    let resizeTimer;
-    useEffect(() => {
-        particlesJS.load('particle-body', '/particlesjs-config.json', () => {});
+    // let resizeTimer;
+    // useEffect(() => {
+    //     particlesJS.load('particle-body', '/particlesjs-config.json', () => {});
 
-        window.addEventListener('resize', () => {
-            clearTimeout(resizeTimer);
-            resizeTimer = setTimeout(function () {
-                try {
-                    const particleBody = document.getElementById('particle-body');
-                    particleBody.removeChild(particleBody.firstChild);
-                    particlesJS.load('particle-body', '/particlesjs-config.json', () => {});
-                } catch (err) {}
-            }, 1000);
-        });
-    }, []);
+    //     window.addEventListener('resize', () => {
+    //         clearTimeout(resizeTimer);
+    //         resizeTimer = setTimeout(function () {
+    //             try {
+    //                 const particleBody = document.getElementById('particle-body');
+    //                 particleBody.removeChild(particleBody.firstChild);
+    //                 particlesJS.load('particle-body', '/particlesjs-config.json', () => {});
+    //             } catch (err) {}
+    //         }, 1000);
+    //     });
+    // }, []);
 
     const getQuestions = async () => {
         try {
@@ -60,7 +60,6 @@ export default function Home() {
             </Head>
 
             <main>
-                {/* <img src="/hikari-logo.jpg" style={{ position: 'fixed', bottom: 20, left: 20, height: 200, opacity: 0.5 }} /> */}
                 <Grid container spacing={2} alignItems="stretch" sx={{ paddingY: 4, zIndex: 40 }}>
                     {data.map((q, index) => {
                         return <Question key={q._id} question={q} setData={setData} />;

@@ -5,10 +5,10 @@ import '../styles/globals.css';
 
 const theme = createTheme({
     typography: {
-        fontFamily: `"Cinzel Decorative"`,
+        fontFamily: `"Arimo", sans-serif`,
         fontSize: 14,
-        fontWeightLight: 200,
-        fontWeightRegular: 400,
+        fontWeightLight: 400,
+        fontWeightRegular: 500,
         fontWeightMedium: 700,
     },
     shape: {
